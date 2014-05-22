@@ -1,0 +1,66 @@
+# OS generated files #
+######################
+*~
+.DS_Store*
+.project
+.settings
+ehthumbs.db
+Icon?
+Thumbs.db
+.svn
+.directory
+
+# IDE generated files #
+#######################
+.project
+.settings
+*.bbprojectd
+*.sublime-project
+*.sublime-workspace
+*.tmproj
+*.pbxuser
+*.perspective
+*.perspectivev3
+*.mode1v3
+*.mode2v3
+*.swp
+*~.nib
+nbproject
+.komodotools
+.idea
+
+# Drupal #
+##########
+build/
+settings.php
+sites.php
+dev.settings.php
+
+# Vagrant specific files #
+##########################
+.vagrant
+vagrant_ansible_inventory_*
+
+# Provisioning specific files #
+#######################
+provision/host.ini
+vagrant_ansible_inventory_provision
+provision/ansible.log
+provision/settings.yml
+
+# Default & common shared web root folder names #
+#################################################
+webroot/*
+www/*
+public_html/*
+htdocs/*
+
+# Aux shared folder #
+#####################
+aux/*/*
+!aux/*/README.md
+
+# Custom playbooks #
+####################
+provision/playbooks-custom/custom/*
+!provision/playbooks-custom/README.md
