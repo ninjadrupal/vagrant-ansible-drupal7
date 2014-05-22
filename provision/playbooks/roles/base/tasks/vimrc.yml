@@ -1,5 +1,5 @@
 ---  
 - name: Vimrc Config | add .vim file
-  template: src=vimrc.j2 dest=dest=/home/{{ user }}/.vimrc
+  template: src=vimrc.j2 dest=/home/{{ user }}/.vimrc
   tags: vim
   sudo: true
