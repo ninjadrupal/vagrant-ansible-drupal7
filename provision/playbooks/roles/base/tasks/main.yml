@@ -3,4 +3,4 @@
 - include: ssh_config.yml
 - include: localactions.yml
 - include: bashrc.yml
-- include: vim.yml
+- include: vimrc.yml
