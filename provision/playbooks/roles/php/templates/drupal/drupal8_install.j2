@@ -1,0 +1,19 @@
+# Remove everything that might be in the webroot directory.
+rm -rf /var/www/site/webroot/.* /var/www/site/webroot/*
+
+# Clone Drupal 8 into the webroot direcory.
+git clone --branch 8.x http://git.drupal.org/project/drupal.git /var/www/site/webroot
+
+# Create a settings.php fie.
+cp /var/www/site/webroot/sites/default/default.settings.php /var/www/site/webroot/sites/default/settings.php
+
+# Create some directories.
+mkdir /var/www/site/webroot/modules/contrib
+mkdir /var/www/site/webroot/modules/custom
+
+# Set some leanient permissions on the webroot directory.
+chmod -R 777 /var/www/site/webroot
+
+# Install Drupal using the drush-master.
+cd /var/www/site/webroot
+/home/vagrant/drush-master/drush site-install --db-url=mysql://{{ dbuser }}:{{ dbpass }}@localhost/{{ dbname }} --account-name=admin --account-pass=password --yes

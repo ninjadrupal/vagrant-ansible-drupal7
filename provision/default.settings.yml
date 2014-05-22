@@ -1,0 +1,129 @@
+---
+#  _________________________
+# < Webscope configuration file >
+#  -------------------------
+#         \   ^__^
+#          \  (oo)\_______
+#             (__)\       )\/\
+#                 ||----w |
+#                 ||     ||
+#
+# Change settings here to control how Webscope sets up your box.
+
+# Webserver settings
+  webserver_hostname: 'domain.local'
+  webserver_hostname_alias: 'www.{{ webserver_hostname }}'
+
+# Vagrantfile configuration
+  boxipaddress: "192.168.100.100"
+  boxname: "webscope"
+  host_synced_folder: "./webroot"
+
+# Install components:
+# - To install a component set it to "y".
+# - To leave a component out of the install set the value to "n".
+
+  adminer_install: "y"
+
+  apache_install: "y"
+
+  imagemagick_install: "n"
+
+  mailcatcher_install: "n"
+
+  memcached_install: "n"
+
+  munin_install: "n"
+
+  mysql_install: "y"
+
+  node_install: "n"
+
+  php_install: "y"
+
+  pimpmylog_install: "n"
+
+  redis_install: "n"
+
+  ruby_install: "n"
+
+  sendmail_install: "n"
+
+  varnish_install: "y" # If you turn this off then make sure you set the http_port to be 80.
+
+  xhprof_install: "n"
+
+# Provision with custom playbooks
+# Copy and rename playbooks-custom/example.main.yml main.yml to use this feature.
+  custom_provision: "n"
+
+# HTTP port for the web server. If you have turned off Varnish then you might want to set this to "80"
+  http_port: 8080
+
+# HTTP port for the Varnish cache
+  varnish_http_port: 80
+
+# Administration email (used in instances when a server email is needed)
+  admin_mail: 'test@example.com'
+
+# PHP Settings
+# PHP Version, can be one of "5.3" or "5.4"
+# Webscope will error when a version that isn't understood is used
+  php_version: "5.3"
+
+# php.ini settings
+  php_memory_limit: 512M
+  php_max_execution_time: 60
+  php_post_max_size: 100M
+  php_upload_max_filesize: 100M
+  php_display_errors: On
+  php_display_startup_errors: On
+  php_html_errors: On
+  php_date_timezone: Pacific/Auckland
+
+# PHP APC Settings
+  apc_rfc1867: '1'
+  apc_shm_size: '256M'
+  apc_shm_segments: '1'
+  apc_num_files_hint: '0'
+
+# MySQL Settings
+  mysql_port: 3306
+  mysql_root_password: webscope
+  server_hostname: webscope
+  dbname: projectdb
+  dbuser: user
+  dbpass: password
+
+# MySQL my.cnf settings
+  mysql_max_allowed_packet: 128M
+  innodb_file_per_table: innodb_file_per_table
+  mysql_character_set_server: utf8
+  mysql_collation_server: utf8_general_ci
+
+# SSH Settings
+  ssh_port: 22
+
+# Varnish Settings
+  varnish_memory: 512
+
+# Ruby settings
+# *Initial* Ruby version to be installed by RVM
+# Note that further Ruby versions can be installed via RVM
+  ruby_version: "1.9.3"
+
+# Local hosts file location
+# Default location on *nix hosts is '/etc/hosts'
+# Default location for GasMask on OSX is '/Users/< username >/Library/Gas Mask/Local/< file >.hst'
+  hosts_file_location: "/etc/hosts"
+
+# Redis Port
+  redis_port: 6379
+
+# Set the level of verbosity that Ansible will use
+# This can be one of "", "v", "vv", "vvv", or "vvvv"
+  ansible_verbosity: ""
+
+# Import db from file on vagrant up
+# The source file needs to reside at aux/db_io/webscope_up.sql.gz
+  db_import_up: "n"

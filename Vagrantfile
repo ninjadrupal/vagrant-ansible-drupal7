@@ -58,6 +58,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     id: "vagrant-root",
     :nfs => nfs_setting
 
+  # Setup vim plugins synced folder
+  config.vm.synced_folder vagrant_dir + "/provision/playbooks/roles/base/vim",
+    "/home/vagrant/.vim",
+    id: "vagrant-root",
+    :nfs => nfs_setting
+    create: true
+
   # SSH Set up.
   config.ssh.forward_agent = true
 
