@@ -20,7 +20,6 @@ This includes the following technologies:
 * Redis
 * Adminer
 * XHProf
-* Solr (Version 4)
 * Node.js (including npm)
 * ImageMagick
 * PimpMyLog
