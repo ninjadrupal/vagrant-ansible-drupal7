@@ -27,7 +27,7 @@
 
   apache_install: "y"
 
-  imagemagick_install: "n"
+  imagemagick_install: "y"
 
   mailcatcher_install: "n"
 
