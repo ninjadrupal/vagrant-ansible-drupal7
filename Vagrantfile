@@ -62,7 +62,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder vagrant_dir + "/provision/playbooks/roles/base/vim",
     "/home/vagrant/.vim",
     id: "vagrant-root",
-    :nfs => nfs_setting
+    :nfs => nfs_setting,
     create: true
 
   # SSH Set up.
