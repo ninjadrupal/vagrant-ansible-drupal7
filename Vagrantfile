@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure virtual machine options.
   config.vm.box = "precise32"
+  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
   config.vm.hostname = boxname
 
   config.vm.network :private_network, ip: boxipaddress
