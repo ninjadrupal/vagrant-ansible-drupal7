@@ -55,7 +55,7 @@ If you already have the needed elements then you can get started.
 Usage
 -----
 
-When you first download that repo you will be unable to do anything with it as the system requires the use of a settings.yml file. In the 'provision' directory, copy & rename the example.settings.yml file to settings.yml - you can then tweak it to suit your needs.
+When you first download that repo you will be unable to do anything with it as the system requires the use of a settings.yml file. In the 'provision' directory, copy & rename the default.settings.yml file to settings.yml - you can then tweak it to suit your needs.
 
 Out of the box you will get the following Vagrant box options:
 
