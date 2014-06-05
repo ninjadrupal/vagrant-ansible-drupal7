@@ -32,9 +32,8 @@
   sudo: true
 
 - name: Drush | download the Registry Rebuild module
-  command: drush dl registry_rebuild --yes chdir=/home/{{ user }}/.drush creates=/home/{{ user }}/.drush/registry_rebuild
+  command: drush dl registry_rebuild --yes
   tags: drush
-  sudo: true
 
 - name: Drush | download Terminus for Pantheon
   git: repo=https://github.com/pantheon-systems/terminus.git dest=/home/{{ user }}/.drush/terminus
@@ -42,7 +41,7 @@
   sudo: true
 
 - name: Drush | download Terminus dependencies
-  command: cd /home/{{ user }}/.drush/terminus && composer update --no-dev
+  command: composer update --no-dev chdir=/home/{{ user }}/.drush/terminus
   tags: drush
   sudo: true
 
