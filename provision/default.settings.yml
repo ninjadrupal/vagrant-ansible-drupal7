@@ -66,11 +66,6 @@
 # Administration email (used in instances when a server email is needed)
   admin_mail: 'test@example.com'
 
-# PHP Settings
-# PHP Version, can be one of "5.3" or "5.4"
-# Webscope will error when a version that isn't understood is used
-  php_version: "5.3"
-
 # php.ini settings
   php_memory_limit: 512M
   php_max_execution_time: 60

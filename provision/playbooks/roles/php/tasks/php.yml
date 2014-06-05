@@ -1,19 +1,4 @@
 ---
-- name: PHP | install php 5.4 prerequisite python packages
-  apt: pkg={{ item }} state=installed update_cache=yes cache_valid_time=3600
-  with_items:
-   - python-pycurl
-   - python-software-properties
-  tags: php
-  sudo: true
-  when: php_version == '5.4'
-
-- name: PHP | add php 5.4 repository
-  apt_repository: repo=ppa:ondrej/php5-oldstable
-  tags: php
-  sudo: yes
-  when: php_version == '5.4'
-
 - name: PHP | install php packages
   apt: pkg={{ item }} state=latest update_cache=yes cache_valid_time=3600
   with_items:
@@ -175,15 +160,6 @@
 
 - name: PHP | Change APC configuration file apc.ini
   template: src=php/php_apache2_apc.ini.j2 dest=/etc/php5/conf.d/apc.ini
-  when: php_version != '5.4'
-  tags: php
-  sudo: true
-  notify:
-    - restart apache2
-
-- name: PHP | Change APC configuration file apc.ini
-  template: src=php/php_apache2_apc.ini.j2 dest=/etc/php5/mods-available/apc.ini
-  when: php_version == '5.4'
   tags: php
   sudo: true
   notify:
