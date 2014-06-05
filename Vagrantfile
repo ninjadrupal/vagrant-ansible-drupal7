@@ -107,16 +107,4 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # Run the custom Ansible playbook (if it exists)
-  if File.exist?("provision/playbooks-custom/custom/tasks/main.yml")
-    config.vm.provision "ansible" do |ansible|
-      ansible.playbook = vagrant_dir + "/provision/playbooks/site-custom.yml"
-      ansible.host_key_checking = false
-      ansible.extra_vars = {user:"vagrant"}
-      if vconfig['ansible_verbosity'] != ''
-        ansible.verbose = vconfig['ansible_verbosity']
-      end
-    end
-  end
-
 end

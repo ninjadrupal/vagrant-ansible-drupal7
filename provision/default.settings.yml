@@ -19,49 +19,11 @@
   boxname: "webscope"
   host_synced_folder: "./webroot"
 
-# Install components:
-# - To install a component set it to "y".
-# - To leave a component out of the install set the value to "n".
-
-  adminer_install: "y"
-
-  apache_install: "y"
-
-  imagemagick_install: "y"
-
-  mailcatcher_install: "n"
-
-  memcached_install: "n"
-
-  munin_install: "n"
-
-  mysql_install: "y"
-
-  node_install: "n"
-
-  php_install: "y"
-
-  pimpmylog_install: "n"
-
-  redis_install: "n"
-
-  ruby_install: "n"
-
-  sendmail_install: "n"
-
-  varnish_install: "y" # If you turn this off then make sure you set the http_port to be 80.
-
-  xhprof_install: "n"
-
-# Provision with custom playbooks
-# Copy and rename playbooks-custom/example.main.yml main.yml to use this feature.
-  custom_provision: "n"
+# Local IP address (used for xdebug)
+  localhost_ip_address: 192.168.1.1
 
 # HTTP port for the web server. If you have turned off Varnish then you might want to set this to "80"
-  http_port: 8080
-
-# HTTP port for the Varnish cache
-  varnish_http_port: 80
+  http_port: 80
 
 # Administration email (used in instances when a server email is needed)
   admin_mail: 'test@example.com'
@@ -99,21 +61,10 @@
 # SSH Settings
   ssh_port: 22
 
-# Varnish Settings
-  varnish_memory: 512
-
-# Ruby settings
-# *Initial* Ruby version to be installed by RVM
-# Note that further Ruby versions can be installed via RVM
-  ruby_version: "1.9.3"
-
 # Local hosts file location
 # Default location on *nix hosts is '/etc/hosts'
 # Default location for GasMask on OSX is '/Users/< username >/Library/Gas Mask/Local/< file >.hst'
   hosts_file_location: "/etc/hosts"
-
-# Redis Port
-  redis_port: 6379
 
 # Set the level of verbosity that Ansible will use
 # This can be one of "", "v", "vv", "vvv", or "vvvv"
