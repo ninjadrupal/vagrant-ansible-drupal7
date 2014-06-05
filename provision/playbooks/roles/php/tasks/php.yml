@@ -170,13 +170,22 @@
   tags: php
   sudo: true
 
+- name: PHP | Check if uploadprogress is installed
+  local_action: stat path=/usr/lib/php5/20100525/uploadprogress.so
+  register: uploadprogress_installed
+  tags: php
+  sudo: true
+
 - name: PHP | Install PECL uploadprogress
   command: pecl install uploadprogress creates=/usr/lib/php5/20100525/uploadprogress.so
+  when: uploadprogress_installed.stat.exists == False
+  register: uploadprogress_first_installed
   tags: php
   sudo: true
 
 - name: PHP | add PECL uploadprogress apache php.ini setting
   lineinfile: dest=/etc/php5/apache2/php.ini state=present line="extension=uploadprogress.so"
+  when: uploadprogress_first_installed
   tags: php
   sudo: true
   notify:
