@@ -37,12 +37,6 @@ alias dfl='drush fl'
 
 alias untarf='tar xf *.tar && rm *.tar'
 
-#if [[ true ]]
-    source ~/.git-completion.sh
-    complete -o default -o nospace -F _git gh
-    complete -o default -o nospace -F _git g
-#fi
-
 # Fancy prompt
 export PS1="\[\e[32;1m\]\u\[\e[0m\]\[\e[32m\]@\h \[\e[36m\]\w \[\e[33m\]\$ \[\e[0m\]"
 
