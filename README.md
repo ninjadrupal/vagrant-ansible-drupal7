@@ -8,41 +8,35 @@ This includes the following technologies:
 * MySQL
 * Apache2
 * PHP
-* Varnish
 * Git
-* Drush (with the 'site audit' and 'hacked!' modules)
-* Munin
+* Drush (with the 'site audit' and 'hacked!', 'registry_rebuild' and 'terminus' modules)
 * Xdebug
-* Ruby (via RVM)
 * Sendmail
-* Mailcatcher
-* Memcached
-* Redis
 * Adminer
-* XHProf
-* Node.js (including npm)
 * ImageMagick
-* PimpMyLog
-
-Many of these items can be turned on and off via a settings file.
 
 Prerequisites
 -------------
 
-* Vagrant 1.4+ (currently only tested with the VirtualBox provider)
-* If you are using VirtualBox then you will need VirtualBox 4.3+
-* Ansible (with the Vagrant Ansible Plugin)
+* Vagrant 1.6
+* VirtualBox 4.2+
+* Ansible
+* NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher))
+
+    sudo apt-get install nfs-kernel-server nfs-common portmap
 
 To install Ansible use the following commands:
 
     sudo easy_install pip
     sudo pip install ansible
 
+If easy_install is not installed run the following:
+
+    sudo apt-get install python-setuptools
+
 You may have to install some prerequisite python packages first:
 
     sudo pip install paramiko PyYAML jinja2 httplib2 markupsafe
-
-Vagrant 1.4+ comes with the Ansible provisioning tool included so there is no need to install extra plugins.
 
 You can also install the Vagrant Cachier plugin in order to cache apt-get and gem requests, which speeds up reprovisioning.
 
@@ -70,6 +64,15 @@ Out of the box you will get the following Vagrant box options:
 Tweak the above settings if you want to create a separate project.
 
 IP addresses will need to be unique for each project.
+
+For using xdebug, you will need to modify the following setting with your IP address on the local network:
+
+    # Local IP address (used for xdebug)
+    localhost_ip_address: 192.168.1.1
+
+On Linux you can find out the IP by running
+
+    ifconfig
 
 With the settings.yml file in place you can get up and running using the following command:
 
@@ -101,21 +104,6 @@ To delete the box and the data it contains run the following command:
 
 When you run 'vagrant up' again you will get back the original box.
 
-Settings
---------
-
-A file called settings.yml is used to configure the Vagrant box. This allows you to control everything but the IP address of the box.
-
-For example, to install Apache on the box go into the settings file and change the apache_install parameter from this:
-
-    apache_install: "n"
-
-To this:
-
-    apache_install: "y"
-
-The default behaviour of the box is to install a Varnish server that proxies an Apache HTTP server. By turning on and off the software install on the machine and configuring the ports used it is possible to create a settings file that has the setup you want.
-
 Additional
 ----------
 
@@ -133,15 +121,6 @@ Password: password
 
 Xdebug has been configured to allow code profiling. You can activate this using the XDEBUG_PROFILE=true parameter ar the end of the URL. Like this: [http://www.drupal.local/?XDEBUG_PROFILE=true](http://www.drupal.local/?XDEBUG_PROFILE=true).
 The profile output can be found in the directory /tmp/xdebug_profiles on the Vagrant guest.
-
-You can access XHProf via the following URL:
-[http://xhprof.drupal.local/](http://xhprof.drupal.local/)
-You'll need to kick off XHProf on your site using "?_profile=1" at the end of the URL. Like this: [http://www.drupal.local/?_profile=1](http://www.drupal.local/?_profile=1).
-
-You can access PimpMyLog and view log data via the following URL:
-[http://logs.drupal.local/](http://logs.drupal.local/)
-
-The Varnish secret key for the box is 04788b22-e179-4579-aac7-f3541fb40391, you will need this when using the Vagrant modules.
 
 Wiki
 ----
