@@ -177,7 +177,7 @@
 
 - name: PHP | Install PECL uploadprogress
   command: pecl install uploadprogress creates=/usr/lib/php5/20100525/uploadprogress.so
-  when: uploadprogress_installed.stdout.find('uploadprogress') != -1
+  when: uploadprogress_installed.stdout.find('uploadprogress') == -1
   tags: php
   sudo: true
 
