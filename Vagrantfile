@@ -48,23 +48,26 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Setup synced folder for site files
   config.vm.synced_folder vconfig['host_synced_folder'],
-    "/var/www/site/webroot", 
+    "/var/www/site/webroot",
+    create: true,
     id: "vagrant-root",
-    :nfs => nfs_setting,
-    create: true
+    type: "nfs",
+    :nfs => nfs_setting
 
   # Setup auxiliary synced folder
   config.vm.synced_folder vagrant_dir + "/aux",
     "/var/www/site/aux",
-    id: "vagrant-root",
+    id: "vagrant-aux",
+    type: "nfs",
     :nfs => nfs_setting
 
   # Setup vim plugins synced folder
   config.vm.synced_folder vagrant_dir + "/provision/playbooks/roles/base/vim",
     "/home/vagrant/.vim",
-    id: "vagrant-root",
-    :nfs => nfs_setting,
-    create: true
+    create: true,
+    id: "vagrant-vim",
+    type: "nfs",
+    :nfs => nfs_setting
 
   # SSH Set up.
   config.ssh.forward_agent = true
@@ -98,13 +101,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    end
 
   # Provision vagrant box with Ansible.
-  config.vm.provision "ansible" do |ansible|
-    ansible.playbook = vagrant_dir + "/provision/playbooks/site.yml"
-    ansible.host_key_checking = false
-    ansible.extra_vars = {user:"vagrant"}
-    if vconfig['ansible_verbosity'] != ''
-      ansible.verbose = vconfig['ansible_verbosity']
-    end
-  end
+#   config.vm.provision "ansible" do |ansible|
+#     ansible.playbook = vagrant_dir + "/provision/playbooks/site.yml"
+#     ansible.host_key_checking = false
+#     ansible.extra_vars = {user:"vagrant"}
+#     if vconfig['ansible_verbosity'] != ''
+#       ansible.verbose = vconfig['ansible_verbosity']
+#     end
+#   end
 
 end
