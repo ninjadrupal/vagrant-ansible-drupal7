@@ -101,13 +101,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    end
 
   # Provision vagrant box with Ansible.
-#   config.vm.provision "ansible" do |ansible|
-#     ansible.playbook = vagrant_dir + "/provision/playbooks/site.yml"
-#     ansible.host_key_checking = false
-#     ansible.extra_vars = {user:"vagrant"}
-#     if vconfig['ansible_verbosity'] != ''
-#       ansible.verbose = vconfig['ansible_verbosity']
-#     end
-#   end
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = vagrant_dir + "/provision/playbooks/site.yml"
+    ansible.host_key_checking = false
+    ansible.extra_vars = {user:"vagrant"}
+    if vconfig['ansible_verbosity'] != ''
+      ansible.verbose = vconfig['ansible_verbosity']
+    end
+  end
 
 end
