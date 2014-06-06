@@ -1,0 +1,10 @@
+---  
+- name: Ubuntu message of the day | Delete update-motd scripts
+  shell: rm -f /etc/update-motd.d/*
+  tags: bash
+  sudo: true
+
+- name: Ubuntu message of the day | add motd file
+  template: src=motd.j2 dest=/etc/motd
+  tags: bash
+  sudo: true

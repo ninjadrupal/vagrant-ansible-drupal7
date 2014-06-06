@@ -5,3 +5,4 @@
 - include: bashrc.yml
 - include: vimrc.yml
 - include: gitconfig.yml
+- include: motd.yml
