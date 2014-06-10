@@ -7,8 +7,8 @@
   roles:
     - base
     - mysql
-    - apache
     - php
+    - apache
     - adminer
     - sendmail
     - imagemagick
