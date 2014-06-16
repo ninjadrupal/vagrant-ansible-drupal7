@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: 127.0.0.1
 
   vars_files:
     - ../settings.yml
@@ -8,7 +8,6 @@
     - name: local actions destroy | delete local hosts.ini file
       file: dest=../host.ini state=absent
       delegate_to: 127.0.0.1
-      sudo: true
 
     - name: local actions destroy | remove reference of host from local hosts file
       lineinfile:

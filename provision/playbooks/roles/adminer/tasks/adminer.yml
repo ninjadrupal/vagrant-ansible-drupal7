@@ -25,8 +25,15 @@
   sudo: true
 
 - name: Apache | add vhost
-  template: src=apache_adminer_vhost.j2 dest=/etc/apache2/sites-enabled/adminer.{{ webserver_hostname }}.conf
+  template: src=apache_adminer_vhost.j2 dest=/etc/apache2/sites-available/adminer.{{ webserver_hostname }}.conf
   tags: adminer
+  sudo: true
+  notify:
+    - restart apache2
+
+- name: Apache | enable adminer site
+  command: a2ensite adminer.{{ webserver_hostname }}.conf
+  tags: apache2
   sudo: true
   notify:
     - restart apache2
