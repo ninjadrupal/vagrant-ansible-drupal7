@@ -96,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Run the halt/destroy playbook upon halting or destroying the box
     if File.exist?(provision_hosts_file)
     config.trigger.before [:halt, :destroy], :stdout => true, :force => true do
-     run 'ansible-playbook --ask-sudo-pass ' + vagrant_dir + '/provision/playbooks/local_halt_destroy.yml'
+      run 'ansible-playbook -i ' + boxipaddress + ', --ask-sudo-pass ' + vagrant_dir + '/provision/playbooks/local_halt_destroy.yml'
     end
   end
 
