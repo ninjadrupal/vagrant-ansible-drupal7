@@ -74,6 +74,10 @@ For using xdebug, you will need to modify the following setting with your IP add
 
 You can find out the IP by running `ifconfig`. On OS X localhost IP address can be found in network settings.
 
+To add a nice touch to you box, you can modify `provision/playbooks/roles/base/templates/motd.j2`.
+Use [http://patorjk.com/software/taag/#p=display&f=Standard&t=Webscope%20-%20Drupal](http://patorjk.com/software/taag/#p=display&f=Standard&t=Webscope%20-%20Drupal) to create your message of the day.
+That needs to be done before the initial build.
+
 With the settings.yml file in place you can get up and running using the following command:
 
     vagrant up
