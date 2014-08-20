@@ -18,30 +18,34 @@ This includes the following technologies:
 Prerequisites
 -------------
 
-* Vagrant 1.6
+* Vagrant 1.6 (Install from the website and not the repos)
 * VirtualBox 4.2+
 * Ansible
 * NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher))
 
 
+You may have to install some prerequisite packages first:
+
+    sudo pip install paramiko PyYAML jinja2 httplib2 markupsafe
     sudo apt-get install nfs-kernel-server nfs-common portmap
+    sudo apt-get install python-setuptools
 
 To install Ansible use the following commands:
 
     sudo easy_install pip
     sudo pip install ansible
 
-If easy_install is not installed run the following:
-
-    sudo apt-get install python-setuptools
-
-You may have to install some prerequisite python packages first:
-
-    sudo pip install paramiko PyYAML jinja2 httplib2 markupsafe
 
 You can also install the Vagrant Cachier plugin in order to cache apt-get and gem requests, which speeds up reprovisioning.
 
     vagrant plugin install vagrant-cachier
+
+If you have issues with the vargrant-cachier plugin complaining about : `gem install nokogiri -v '1.6.3.1' - try the following:
+
+    apt-get install libxslt-dev libxml2-dev build-essential libxslt libxml2
+    rm -rf ~/.vagrant.d
+
+Then remove vagrant reinstall and then try install the plugin again. We haven't quite got the bottom of what goes wrong here - sometimes it works smoothly and sometimes not. Issue detailed here [https://github.com/mitchellh/vagrant/issues/3769](https://github.com/mitchellh/vagrant/issues/3769)
 
 To support deprovisioning you also need to install the Vagrant Triggers plugin.
 
