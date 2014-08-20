@@ -49,6 +49,8 @@ Then remove vagrant reinstall and then try install the plugin again. We haven't 
 
 To support deprovisioning you also need to install the Vagrant Triggers plugin.
 
+    vagrant plugin install vagrant-triggers
+
 If you already have the needed elements then you can get started.
 
 Usage
