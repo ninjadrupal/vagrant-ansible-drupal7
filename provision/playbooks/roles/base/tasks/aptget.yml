@@ -11,3 +11,5 @@
     - vim
     - git
     - make
+    - atool
+    - tree
