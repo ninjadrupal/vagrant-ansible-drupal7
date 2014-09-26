@@ -32,6 +32,12 @@
         - "{{ sites }}"
       sudo: true
 
+    - name: MySQL | create applications databases
+      mysql_db: name={{ item["db"] }} state=present login_password={{ mysql_root_password }} login_user=root
+      tags: mysql
+      with_items:
+        - "{{ sites }}"
+
   handlers:
       - include: common/handlers/main.yml
 

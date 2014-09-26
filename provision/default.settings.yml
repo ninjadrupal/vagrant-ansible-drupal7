@@ -14,11 +14,12 @@
   cpus: 1
 
   sites:
-      - map: domain.local
-        to: /absolute/path/to/app
+    - map: domain.local
+      to: /absolute/path/to/app
+      db: projectdb
 
 # Webserver settings
-  webserver_hostname: 'domain.local'
+  webserver_hostname: 'vagrant.local'
   webserver_hostname_alias: 'www.{{ webserver_hostname }}'
 
 # Vagrantfile configuration

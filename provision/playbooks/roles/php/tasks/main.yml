@@ -1,5 +1,4 @@
 ---
 - include: php.yml
-- include: pear.yml
 - include: drush.yml
 - include: xdebug.yml
