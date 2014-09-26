@@ -8,6 +8,10 @@
       path: /absolute/path/to/app
       db: projectdb
 
+# Git settings
+  git_name: "Your name"
+  git_email: "your@email.com"
+
   memory: 2048
 
 # Webserver settings
