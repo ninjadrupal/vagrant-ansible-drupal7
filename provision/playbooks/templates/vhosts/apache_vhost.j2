@@ -1,20 +1,20 @@
 <VirtualHost *:{{ http_port }}>
   ServerAdmin {{ admin_mail }}
   ServerName {{ item['map'] }}
-  ServerAlias www.{{ item['map'] }}
+  ServerAlias www.{{ item['alias'] }}
   ServerAlias *.vagrantshare.com
 
-  DocumentRoot /var/www/sites/{{ item['map'] }}
+  DocumentRoot /var/www/sites/{{ item['alias'] }}
 
-  <Directory /var/www/sites/{{ item['map'] }}>
+  <Directory /var/www/sites/{{ item['alias'] }}>
     Options FollowSymLinks MultiViews
     AllowOverride All
     Order allow,deny
     allow from all
   </Directory>
 
-  ErrorLog /var/www/logs/{{ item['map'] }}.error.log
+  ErrorLog /var/www/logs/{{ item['alias'] }}.error.log
 
   LogLevel warn
-  CustomLog /var/www/logs/{{ item['map'] }}.access.log combined
+  CustomLog /var/www/logs/{{ item['alias'] }}.access.log combined
 </VirtualHost>

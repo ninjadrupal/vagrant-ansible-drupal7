@@ -7,18 +7,18 @@
   tasks:
 
     - name: Apache | add vhost
-      template: src=templates/vhosts/apache_vhost.j2 dest=/etc/apache2/sites-available/{{ item['map'] }}.conf
+      template: src=templates/vhosts/apache_vhost.j2 dest=/etc/apache2/sites-available/{{ item['alias'] }}.conf
       tags: apache2
       sudo: true
       with_items:
-        - "{{ sites }}"
+        - "{{ vhosts }}"
 
     - name: Apache | enable our site
-      command: a2ensite {{ item['map'] }}.conf
+      command: a2ensite {{ item['alias'] }}.conf
       tags: apache2
       sudo: true
       with_items:
-        - "{{ sites }}"
+        - "{{ vhosts }}"
       notify:
         - restart apache2
 
@@ -26,17 +26,17 @@
       lineinfile:
         dest='{{ hosts_file_location }}'
         state=present
-        line='{{ local_ip_address }} {{ item["map"] }} www.{{ item["map"] }}'
+        line='{{ local_ip_address }} {{ item["alias"] }} www.{{ item["alias"] }}'
       delegate_to: 127.0.0.1
       with_items:
-        - "{{ sites }}"
+        - "{{ vhosts }}"
       sudo: true
 
     - name: MySQL | create applications databases
       mysql_db: name={{ item["db"] }} state=present login_password={{ mysql_root_password }} login_user=root
       tags: mysql
       with_items:
-        - "{{ sites }}"
+        - "{{ vhosts }}"
 
   handlers:
       - include: common/handlers/main.yml

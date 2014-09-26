@@ -95,9 +95,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  vconfig['sites'].each do |site|
-    site_alias = site['map']
-    folder_path = site['to']
+  vconfig['vhosts'].each do |vhost|
+    site_alias = vhost['alias']
+    folder_path = vhost['path']
     config.vm.synced_folder folder_path,
       "/var/www/sites/" + site_alias,
       create: true,
