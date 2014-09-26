@@ -1,0 +1,37 @@
+---
+- hosts: all
+
+  vars_files:
+    - ../settings.yml
+
+  tasks:
+
+    - name: Apache | add vhost
+      template: src=templates/vhosts/apache_vhost.j2 dest=/etc/apache2/sites-available/{{ item['map'] }}.conf
+      tags: apache2
+      sudo: true
+      with_items:
+        - "{{ sites }}"
+
+    - name: Apache | enable our site
+      command: a2ensite {{ item['map'] }}.conf
+      tags: apache2
+      sudo: true
+      with_items:
+        - "{{ sites }}"
+      notify:
+        - restart apache2
+
+    - name: local actions | add reference of host to local hosts file
+      lineinfile:
+        dest='{{ hosts_file_location }}'
+        state=present
+        line='{{ local_ip_address }} {{ item["map"] }} www.{{ item["map"] }}'
+      delegate_to: 127.0.0.1
+      with_items:
+        - "{{ sites }}"
+      sudo: true
+
+  handlers:
+      - include: common/handlers/main.yml
+

@@ -10,6 +10,13 @@
 #
 # Change settings here to control how Webscope sets up your box.
 
+  memory: 2048
+  cpus: 1
+
+  sites:
+      - map: domain.local
+        to: /absolute/path/to/app
+
 # Webserver settings
   webserver_hostname: 'domain.local'
   webserver_hostname_alias: 'www.{{ webserver_hostname }}'

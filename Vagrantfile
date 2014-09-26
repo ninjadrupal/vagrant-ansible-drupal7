@@ -39,8 +39,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure virtual machine setup.
   config.vm.provider :virtualbox do |v|
-    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--memory", vconfig["memory"] ||= "2048"]
+    v.customize ["modifyvm", :id, "--cpus", vconfig["cpus"] ||= "1"]
     v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
   # Set up NFS drive.
@@ -50,22 +52,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder vconfig['host_synced_folder'],
     "/var/www/site/webroot",
     create: true,
-    id: "vagrant-root",
-    type: "nfs",
-    :nfs => nfs_setting
-
-  # Setup auxiliary synced folder
-  config.vm.synced_folder vagrant_dir + "/aux",
-    "/var/www/site/aux",
-    id: "vagrant-aux",
-    type: "nfs",
-    :nfs => nfs_setting
-
-  # Setup vim plugins synced folder
-  config.vm.synced_folder vagrant_dir + "/provision/playbooks/roles/base/vim",
-    "/home/vagrant/.vim",
-    create: true,
-    id: "vagrant-vim",
     type: "nfs",
     :nfs => nfs_setting
 
@@ -108,6 +94,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     if vconfig['ansible_verbosity'] != ''
       ansible.verbose = vconfig['ansible_verbosity']
     end
+  end
+
+  vconfig['sites'].each do |site|
+    site_alias = site['map']
+    folder_path = site['to']
+    config.vm.synced_folder folder_path,
+      "/var/www/sites/" + site_alias,
+      create: true,
+      type: "nfs",
+      :nfs => nfs_setting
+  end
+
+  # Create all virtual hosts
+  config.trigger.after [:up, :reload], :stdout => true, :force => true do
+    run 'ansible-playbook -i ' + boxipaddress + ', -K --user=vagrant --private-key=~/.vagrant.d/insecure_private_key ' + vagrant_dir + '/provision/playbooks/virtual_hosts.yml --extra-vars "local_ip_address=' + boxipaddress + '"'
   end
 
 end
