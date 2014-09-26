@@ -1,6 +1,6 @@
 <VirtualHost *:{{ http_port }}>
   ServerAdmin {{ admin_mail }}
-  ServerName {{ item['map'] }}
+  ServerName {{ item['alias'] }}
   ServerAlias www.{{ item['alias'] }}
   ServerAlias *.vagrantshare.com
 
