@@ -73,3 +73,8 @@
 # Set the level of verbosity that Ansible will use
 # This can be one of "", "v", "vv", "vvv", or "vvvv"
   ansible_verbosity: ""
+
+# Ruby settings
+# *Initial* Ruby version to be installed by RVM
+# Note that further Ruby versions can be installed via RVM
+  ruby_version: "1.9.3"

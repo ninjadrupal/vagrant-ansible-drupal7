@@ -1,0 +1,19 @@
+---
+- name: NodeJS | Prepare for installation
+  raw: "curl -sL https://deb.nodesource.com/setup | sudo bash -"
+  tags: nodejs
+  sudo: true
+
+- name: NodeJS | Install NodeJS
+  apt: name=nodejs state=present
+  tags: nodejs
+  sudo: true
+
+- name: Install Bower / Grunt / Grunt CLI
+  npm: name={{ item }} global=yes
+  tags: nodejs
+  with_items:
+    - bower
+    - grunt
+    - grunt-cli
+  sudo: true

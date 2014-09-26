@@ -1,0 +1,10 @@
+---
+- name: Install Sass
+  command: gem install sass
+  tags: sass
+  sudo: true
+
+- name: Install Compass
+  command: gem install compass
+  tags: sass
+  sudo: true
