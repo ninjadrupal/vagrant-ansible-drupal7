@@ -1,2 +1,3 @@
 ---
 - include: adminer.yml
+- include: test_adminer.yml

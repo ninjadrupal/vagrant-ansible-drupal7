@@ -1,4 +1,0 @@
----
-- name: Test | ImageMagick is installed
-  shell: convert -version
-  tags: test

@@ -1,5 +1,0 @@
----
-- include: php.yml
-- include: apache.yml
-- include: mysql.yml
-- include: hosts.yml

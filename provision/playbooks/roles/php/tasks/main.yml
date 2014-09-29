@@ -2,3 +2,4 @@
 - include: php.yml
 - include: drush.yml
 - include: xdebug.yml
+- include: test_php.yml
