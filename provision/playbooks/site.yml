@@ -5,14 +5,14 @@
     - ../settings.yml
 
   roles:
-#    - base
-#    - apache
-#    - mysql
-#    - php
+    - base
+    - apache
+    - mysql
+    - php
     - ruby
     - front_end
-#    - adminer
-#    - imagemagick
+    - adminer
+    - imagemagick
 
   post_tasks:
 
