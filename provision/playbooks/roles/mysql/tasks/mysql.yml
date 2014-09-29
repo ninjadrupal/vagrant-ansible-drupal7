@@ -88,11 +88,6 @@
 - name: MySQL | Remove the MySQL test database
   mysql_db: db=test state=absent login_user=root login_password={{ mysql_root_password }}
   tags: mysql
-  
-# set up default database
-- name: MySQL | create application database
-  mysql_db: name={{ dbname }} state=present login_password={{ mysql_root_password }} login_user=root
-  tags: mysql
 
 - name: MySQL | create application database user
   mysql_user: name={{ dbuser }} password={{ dbpass }} priv=*.*:ALL host='%' state=present login_password={{ mysql_root_password }} login_user=root

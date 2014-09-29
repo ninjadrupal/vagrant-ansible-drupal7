@@ -52,7 +52,6 @@
   mysql_port: 3306
   mysql_root_password: webscope
   server_hostname: webscope
-  dbname: projectdb
   dbuser: user
   dbpass: password
 
