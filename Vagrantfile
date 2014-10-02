@@ -7,7 +7,6 @@
 
 # Find the current vagrant directory.
 vagrant_dir = File.expand_path(File.dirname(__FILE__))
-home_dir = File.expand_path('~')
 provision_hosts_file = vagrant_dir + '/provision/host.ini'
 
 # Include config from provision/settings.yml
