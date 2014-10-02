@@ -1,0 +1,16 @@
+---
+- name: Test | NodeJS is installed
+  shell: nodejs -v
+  tags: test
+
+- name: Test | NPM is installed
+  shell: npm -v
+  tags: test
+
+- name: Test | Bower is installed
+  shell: bower -v
+  tags: test
+
+- name: Test | Grunt is installed
+  shell: bower -v
+  tags: test

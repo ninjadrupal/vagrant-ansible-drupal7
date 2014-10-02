@@ -1,3 +1,2 @@
 ---
 - include: mysql.yml
-- include: test_mysql.yml

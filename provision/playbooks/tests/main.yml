@@ -1,1 +1,6 @@
 ---
+- include: php.yml
+- include: apache.yml
+- include: mysql.yml
+- include: adminer.yml
+- include: front_end.yml
