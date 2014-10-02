@@ -13,6 +13,7 @@
     - front_end
     - adminer
     - imagemagick
+    - codeception
 
   post_tasks:
 
