@@ -7,6 +7,7 @@
 
 # Find the current vagrant directory.
 vagrant_dir = File.expand_path(File.dirname(__FILE__))
+home_dir = File.expand_path('~')
 provision_hosts_file = vagrant_dir + '/provision/host.ini'
 
 # Include config from provision/settings.yml
@@ -23,8 +24,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure virtual machine options.
-  config.vm.box = "precise32"
-  config.vm.box_url = "http://files.vagrantup.com/precise32.box"
+  config.vm.box = "hashicorp/precise64"
   config.vm.hostname = boxname
 
   config.vm.network :private_network, ip: boxipaddress
