@@ -55,3 +55,7 @@ case $TERM in
                 PROMPT_COMMAND='echo -ne "\033_${USER}@${HOSTNAME%%.*}:${PWD/$HOME/~}\033\\"'
                 ;;
 esac
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi

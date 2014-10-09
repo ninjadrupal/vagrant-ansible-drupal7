@@ -1,5 +1,9 @@
----  
+---
+- name: Git Config | Install git completion
+  raw: curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+  tags: git
+
 - name: Git Config | add .gitconfig file
   template: src=gitconfig.j2 dest=/home/{{ user }}/.gitconfig
-  tags: bash
+  tags: git
   sudo: true

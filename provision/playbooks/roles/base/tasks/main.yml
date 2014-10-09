@@ -1,9 +1,6 @@
 ---
 - include: aptget.yml
-- include: nfs.yml
-- include: ssh_config.yml
-- include: localactions.yml
 - include: bashrc.yml
-- include: vimrc.yml
 - include: gitconfig.yml
-- include: motd.yml
+- include: nfs.yml
+- include: vimrc.yml
