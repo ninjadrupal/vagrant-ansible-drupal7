@@ -1,4 +1,0 @@
----
-- name: Test | Apache is installed
-  shell: apache2 -v
-  tags: test

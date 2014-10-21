@@ -13,6 +13,7 @@
     - atop
     - curl
     - git
+    - imagemagick
     - make
     - mc
     - python-software-properties

@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($_GET['username']) && !isset($_GET['file'])) {
-  header('Location: http://' . $_SERVER['SERVER_NAME'] . ':{{ http_port }}/?username={{ dbuser }}');
+  header('Location: http://' . $_SERVER['SERVER_NAME'] . '/?username={{ dbuser }}');
 }
 
 header("Pragma: no-cache");
@@ -25,4 +25,4 @@ function adminer_object() {
     return new AdminerSoftware();
 }
 
-include "./adminer-4.1.0-mysql-en.php";
+include "./adminer-3.7.1-en.php";

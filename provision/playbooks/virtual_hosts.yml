@@ -1,26 +1,30 @@
 ---
 - hosts: all
 
+  vars:
+    sites_dir: /home/vagrant/sites
+
   vars_files:
     - ../settings.yml
 
   tasks:
 
-    - name: Apache | add vhost
-      template: src=templates/vhosts/apache_vhost.j2 dest=/etc/apache2/sites-available/{{ item['alias'] }}.conf
-      tags: apache2
+    - name: Nginx | add vhost
+      template: src=templates/server_block.j2 dest=/etc/nginx/sites-available/{{ item['alias'] }}
+      tags: nginx
       sudo: true
       with_items:
         - "{{ vhosts }}"
 
-    - name: Apache | enable our site
-      command: a2ensite {{ item['alias'] }}.conf
-      tags: apache2
+    - name: Nginx | enable vhosts
+      file: src=/etc/nginx/sites-available/{{ item['alias'] }} dest=/etc/nginx/sites-enabled/{{ item['alias'] }} state=link
+      tags: nginx
       sudo: true
       with_items:
         - "{{ vhosts }}"
       notify:
-        - restart apache2
+        - restart nginx
+        - restart fpm
 
     - name: local actions | add reference of host to local hosts file
       lineinfile:
@@ -33,11 +37,10 @@
       sudo: true
 
     - name: MySQL | create applications databases
-      mysql_db: name={{ item["db"] }} state=present login_password={{ mysql_root_password }} login_user=root
+      mysql_db: name={{ item["db"] }} state=present login_password={{ mysql_root_password }} login_user=root collation={{ mysql_collation_server }}
       tags: mysql
       with_items:
         - "{{ vhosts }}"
 
   handlers:
       - include: common/handlers/main.yml
-

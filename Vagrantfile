@@ -28,18 +28,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.network :private_network, ip: boxipaddress
 
-  # Allow caching to be used (see the vagrant-cachier plugin)
-  if Vagrant.has_plugin?("vagrant-cachier")
-    config.cache.scope = :machine
-    config.cache.synced_folder_opts = { type: :nfs }
-    config.cache.auto_detect = false
-    config.cache.enable :apt
+  # Set *Vagrant* VM name
+  config.vm.define boxname do |boxname|
   end
 
   # Configure virtual machine setup.
   config.vm.provider :virtualbox do |v|
-    v.customize ["modifyvm", :id, "--memory", vconfig["memory"] ||= "2048"]
-    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--memory", vconfig["memory"]]
+    v.customize ["modifyvm", :id, "--cpus", vconfig["cpus"]]
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
@@ -47,18 +43,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
 
   # Setup synced folder for site files
-  config.vm.synced_folder vconfig['host_synced_folder'],
-    "/var/www/site/webroot",
-    create: true,
+  config.vm.synced_folder "./webroot",
+    "/home/vagrant/sites/" + vconfig["webserver_hostname"],
     type: "nfs",
-    :nfs => nfs_setting
+    create: true
 
   # SSH Set up.
   config.ssh.forward_agent = true
-
-  # Set machine name.
-  config.vm.define :webscope do |t|
-  end
 
   # If vagrant-trigger isn't instaled then exit
   if !Vagrant.has_plugin?("vagrant-triggers")
@@ -98,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     site_alias = vhost['alias']
     folder_path = vhost['path']
     config.vm.synced_folder folder_path,
-      "/var/www/sites/" + site_alias,
+      "/home/vagrant/sites/" + site_alias,
       create: true,
       type: "nfs",
       :nfs => nfs_setting

@@ -12,16 +12,21 @@
   git_name: "Your name"
   git_email: "your@email.com"
 
-  memory: 2048
+# Give VM 1/4 of system memory
+  memory: 1024
+# Give VM access to all cpu cores on the host
+# To find out the number of cores, run the following commands:
+#   Mac: sysctl -n hw.ncpu
+#   Linux: nproc
+  cpus: 2
 
 # Webserver settings
-  webserver_hostname: 'vagrant.local'
+  webserver_hostname: 'webscope-vagrant.local'
   webserver_hostname_alias: 'www.{{ webserver_hostname }}'
 
 # Vagrantfile configuration
   boxipaddress: "192.168.100.100"
-  boxname: "webscope"
-  host_synced_folder: "./webroot"
+  boxname: "vagrant"
 
 # Local IP address (used for xdebug)
   localhost_ip_address: 192.168.1.1
@@ -50,8 +55,8 @@
 
 # MySQL Settings
   mysql_port: 3306
-  mysql_root_password: webscope
-  server_hostname: webscope
+  mysql_root_password: password
+  server_hostname: vagrant
   dbuser: user
   dbpass: password
 
