@@ -3,15 +3,23 @@ Webscope - Vagrant LAMP Ansible Drupal
 
 A Drupal development platform in a box, with everything you would need to develop Drupal websites.
 
+## Usable branches ##
+* `master` - hosts multiple Drupal projects on the same box
+* `frontend` - hosts a single project available on a local network
+* `single` - hosts a single project (our initial setup)
+
 This includes the following technologies:
 
 * MySQL
-* Apache2
-* PHP
+* Nginx
+* PHP 5.3
+* Codeception with PhantomJS
+* NodeJS
+* Ruby RVM (optional)
 * Git
+* Vim
 * Drush (with the 'site audit' and 'hacked!', 'registry_rebuild' and 'terminus' modules)
 * Xdebug
-* Sendmail
 * Adminer
 * ImageMagick
 
@@ -21,7 +29,7 @@ Prerequisites
 * Vagrant 1.6 (Install from the website and not the repos)
 * VirtualBox 4.2+
 * Ansible
-* NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher))
+* NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher)) - not required for `frontend` branch
 
 
 You may have to install some prerequisite packages first:
@@ -54,22 +62,24 @@ To support deprovisioning you also need to install the Vagrant Triggers plugin.
 Usage
 -----
 
-When you first download that repo you will be unable to do anything with it as the system requires the use of a settings.yml file. In the 'provision' directory, copy & rename the default.settings.yml file to settings.yml - you can then tweak it to suit your needs.
+When you first download that repo you will be unable to do anything with it as the system requires the use of a `settings.yml` file. In the 'provision' directory, copy & rename the `example.settings.yml` file to `settings.yml` - you can then tweak it to suit your needs.
+
+Make sure to provide your git settings, so you can push and pull from inside the virtual machine.
 
 Out of the box you will get the following Vagrant box options:
 
-    webserver_hostname: 'drupal.local'
+    webserver_hostname: 'webscope-vagrant.local'
     webserver_hostname_alias: 'www.{{ webserver_hostname }}'
 
     # Vagrantfile configuration
 
     boxipaddress: "192.168.100.100"
-    boxname: "webscope"
+    boxname: "vagrant"
 
 Tweak the above settings if you want to create a separate project.
 
 You can use the same IP address for each box, but in that case you won't be able to launch and access both at the same time.
-That IP address is written to your local hosts file on every `vagrant up` and is removed from the hosts file on `vagrant halt`
+That IP address is written to your local hosts file on every `vagrant up` and is removed from the hosts file on `vagrant halt` or `vagrant destroy`
 
 For using xdebug, you will need to modify the following setting with your IP address on the local network:
 
@@ -77,10 +87,6 @@ For using xdebug, you will need to modify the following setting with your IP add
     localhost_ip_address: 192.168.1.1
 
 You can find out the IP by running `ifconfig`. On OS X localhost IP address can be found in network settings.
-
-To add a nice touch to you box, you can modify `provision/playbooks/roles/base/templates/motd.j2`.
-Use [http://patorjk.com/software/taag/#p=display&f=Standard&t=Webscope%20-%20Drupal](http://patorjk.com/software/taag/#p=display&f=Standard&t=Webscope%20-%20Drupal) to create your message of the day.
-That needs to be done before the initial build.
 
 With the settings.yml file in place you can get up and running using the following command:
 
@@ -119,9 +125,9 @@ When you run 'vagrant up' again you will get back the original box.
 Additional
 ----------
 You can access Adminer via the following URL:
-[http://adminer.drupal.local/](http://adminer.drupal.local/)
+[http://adminer.webscope-vagrant.local/](http://adminer.webscope-vagrant.local/)
 
-Adminer will automatically log you into the database when you open it. The local MySQL user details are as follows:
+Adminer will automatically log you in when you open it. The local MySQL user details are as follows:
 Username: user
 Password: password
 
@@ -138,4 +144,4 @@ Restart apache after changes were made by running `sudo service apache2 restart`
 Wiki
 ----
 
-That setup is based on [https://bitbucket.org/philipnorton42/vlad/wiki](https://bitbucket.org/philipnorton42/vlad/wiki).
+That setup is based on [https://github.com/hashbangcode/vlad](https://github.com/hashbangcode/vlad).
