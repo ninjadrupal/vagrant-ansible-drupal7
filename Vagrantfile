@@ -2,8 +2,18 @@
 # vi: set ft=ruby :
 
 # Webscope - Vagrant LAMP Ansible Drupal
-# A Drupal development platform in a box, with everything you would need to develop Drupal websites.
+# A Drupal development platform in a box, with everything you would need to develop Drupal 7 websites.
 # See the readme file (README.md) for more information.
+
+# If vagrant-trigger isn't instaled then exit
+if !Vagrant.has_plugin?("vagrant-triggers")
+  puts "'vagrant-triggers' plugin is required"
+  puts "This can be installed by running:"
+  puts
+  puts " vagrant plugin install vagrant-triggers"
+  puts
+  exit
+end
 
 # Find the current vagrant directory.
 vagrant_dir = File.expand_path(File.dirname(__FILE__))
@@ -50,16 +60,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # SSH Set up.
   config.ssh.forward_agent = true
-
-  # If vagrant-trigger isn't instaled then exit
-  if !Vagrant.has_plugin?("vagrant-triggers")
-    puts "'vagrant-triggers' plugin is required"
-    puts "This can be installed by running:"
-    puts
-    puts " vagrant plugin install vagrant-triggers"
-    puts
-    exit
-  end
 
   # Run an Ansible playbook on setting the box up
   if !File.exist?(provision_hosts_file)
