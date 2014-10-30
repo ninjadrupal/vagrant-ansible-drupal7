@@ -186,7 +186,7 @@
   service: name=php5-fpm state=restarted
   sudo: true
 
-- name: PHP | Check if Composer is installed
+- name: PHP | Check if Composer is installed (ignore if fails)
   raw: composer
   register: composer_installed
   ignore_errors: true
@@ -198,7 +198,7 @@
   tags: php
   sudo: true
 
-- name: PHP | Check if uploadprogress is installed
+- name: PHP | Check if uploadprogress is installed (ignore if fails)
   command: pecl list | grep uploadprogress
   register: uploadprogress_installed
   tags: php

@@ -1,5 +1,5 @@
 ---
-- name: Codeception | Check if Codeception is installed
+- name: Codeception | Check if Codeception is installed (ignore if fails)
   raw: codecept
   register: codecept_installed
   ignore_errors: true
@@ -17,7 +17,7 @@
   sudo: true
   tags: codeception
 
-- name: Codeception | Check if PhantomJS is installed
+- name: Codeception | Check if PhantomJS is installed (ignore if fails)
   raw: which phantomjs
   register: phantomjs_installed
   ignore_errors: true

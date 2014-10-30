@@ -1,5 +1,5 @@
 ---
-- name: Drush | Check if Drush is installed
+- name: Drush | Check if Drush is installed (ignore if fails)
   raw: drush --version
   register: drush_installed
   ignore_errors: true
@@ -26,7 +26,7 @@
   when: drush_installed.stdout.find('command not found') != -1
   tags: drush
 
-- name: Drush | Check if Site Audit is installed
+- name: Drush | Check if Site Audit is installed (ignore if fails)
   raw: ls ~/.drush/site_audit
   register: site_audit_installed
   ignore_errors: true
@@ -37,7 +37,7 @@
   when: site_audit_installed.stdout.find('No such file or directory') != -1
   tags: drush
 
-- name: Drush | Check if hacked! is installed
+- name: Drush | Check if hacked! is installed (ignore if fails)
   raw: ls ~/.drush/hacked
   register: hacked_installed
   ignore_errors: true
@@ -48,7 +48,7 @@
   when: hacked_installed.stdout.find('No such file or directory') != -1
   tags: drush
 
-- name: Drush | Check if coder is installed
+- name: Drush | Check if coder is installed (ignore if fails)
   raw: ls ~/.drush/coder
   register: coder_installed
   ignore_errors: true
@@ -59,7 +59,7 @@
   when: coder_installed.stdout.find('No such file or directory') != -1
   tags: drush
 
-- name: Drush | Check if Registry Rebuild is installed
+- name: Drush | Check if Registry Rebuild is installed (ignore if fails)
   raw: ls ~/.drush/registry_rebuild
   register: registry_rebuild_installed
   ignore_errors: true
@@ -70,7 +70,7 @@
   when: registry_rebuild_installed.stdout.find('No such file or directory') != -1
   tags: drush
 
-- name: Drush | Check if Terminus is installed
+- name: Drush | Check if Terminus is installed (ignore if fails)
   raw: ls ~/.drush/terminus
   register: terminus_installed
   ignore_errors: true

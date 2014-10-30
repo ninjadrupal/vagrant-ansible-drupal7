@@ -10,16 +10,16 @@ A Drupal development platform in a box, with everything you would need to develo
 
 This includes the following technologies:
 
-* MySQL
 * Nginx
 * PHP 5.3
+* MySQL
 * Codeception with PhantomJS
 * NodeJS
-* Ruby RVM (optional)
+* Ruby rbenv
 * Git
 * Vim
 * Drush (with the 'site audit' and 'hacked!', 'registry_rebuild' and 'terminus' modules)
-* Xdebug
+* Xdebug (disabled on build)
 * Adminer
 * ImageMagick
 
@@ -68,7 +68,7 @@ Make sure to provide your git settings, so you can push and pull from inside the
 
 Out of the box you will get the following Vagrant box options:
 
-    webserver_hostname: 'webscope-vagrant.local'
+    webserver_hostname: 'vagrant-multi.local'
     webserver_hostname_alias: 'www.{{ webserver_hostname }}'
 
     # Vagrantfile configuration
@@ -92,7 +92,7 @@ With the settings.yml file in place you can get up and running using the followi
 
     vagrant up
 
-Setting up the box takes about 15 minutes the first time, because Ansible provisioning script will download and install all the needed packages.
+Setting up the box takes about 15-20 minutes the first time (depending on your Internet connection), because Ansible provisioning script will download and install all the needed packages.
 You can see the webroot of the Vagrant box by going to the address [www.drupal.local](http://www.drupal.local/).
 A local Ansible action will add an entry to your hosts file for the box IP address (192.168.100.100 by default) so you don't need to alter it.
 
@@ -125,21 +125,18 @@ When you run 'vagrant up' again you will get back the original box.
 Additional
 ----------
 You can access Adminer via the following URL:
-[http://adminer.webscope-vagrant.local/](http://adminer.webscope-vagrant.local/)
+[http://adminer.vagrant-multi.local/](http://adminer.vagrant-multi.local/)
 
 Adminer will automatically log you in when you open it. The local MySQL user details are as follows:
 Username: user
 Password: password
-
-Xdebug has been configured to allow code profiling. You can activate this using the XDEBUG_PROFILE=true parameter ar the end of the URL. Like this: [http://www.drupal.local/?XDEBUG_PROFILE=true](http://www.drupal.local/?XDEBUG_PROFILE=true).
-The profile output can be found in the directory /tmp/xdebug_profiles on the Vagrant guest.
 
 ## PhpStorm xdebug setup ##
 Coming soon
 
 Xdebug configuration file: `/etc/php5/conf.d/xdebug.ini`
 If your local IP address has changed, Xdebug IP will need to be modified accordingly in the file specified above.
-Restart apache after changes were made by running `sudo service apache2 restart` in your box.
+Restart apache after changes were made by running `sudo service nginx restart && sudo service php5-fpm restart` in your box.
 
 Wiki
 ----

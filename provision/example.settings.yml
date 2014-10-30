@@ -13,6 +13,7 @@
   git_email: "your@email.com"
 
 # Give VM 1/4 of system memory
+# Must be in range [4, 3584] MB (VirtualBox restriction)
   memory: 1024
 # Give VM access to all cpu cores on the host
 # To find out the number of cores, run the following commands:
@@ -21,7 +22,7 @@
   cpus: 2
 
 # Webserver settings
-  webserver_hostname: 'webscope-vagrant.local'
+  webserver_hostname: 'vagrant-multi.local'
   webserver_hostname_alias: 'www.{{ webserver_hostname }}'
 
 # Vagrantfile configuration
@@ -46,12 +47,6 @@
   php_display_startup_errors: On
   php_html_errors: On
   php_date_timezone: Pacific/Auckland
-
-# PHP APC Settings
-  apc_rfc1867: '1'
-  apc_shm_size: '256M'
-  apc_shm_segments: '1'
-  apc_num_files_hint: '0'
 
 # MySQL Settings
   mysql_port: 3306
@@ -79,6 +74,4 @@
   ansible_verbosity: ""
 
 # Ruby settings
-# *Initial* Ruby version to be installed by RVM
-# Note that further Ruby versions can be installed via RVM
-  ruby_version: "1.9.3"
+  default_ruby_version: "2.1.2"
