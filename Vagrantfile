@@ -49,9 +49,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
-  # Set up NFS drive.
-  nfs_setting = RUBY_PLATFORM =~ /darwin/ || RUBY_PLATFORM =~ /linux/
-
   # Setup synced folder for site files
   config.vm.synced_folder "./webroot",
     "/home/vagrant/sites/" + vconfig["webserver_hostname"],
@@ -92,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "/home/vagrant/sites/" + site_alias,
       create: true,
       type: "nfs",
-      :nfs => nfs_setting
+      mount_options: ['rw', 'vers=3', 'tcp', 'fsc', 'actimeo=2']  # the fsc is for cachedfilesd
   end
 
   # Create all virtual hosts

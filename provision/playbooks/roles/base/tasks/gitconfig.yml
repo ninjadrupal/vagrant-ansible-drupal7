@@ -7,3 +7,7 @@
   template: src=gitconfig.j2 dest=/home/{{ user }}/.gitconfig
   tags: git
   sudo: true
+
+- name: Git Config | Enable preload index
+  raw: git config core.preloadindex true
+  tags: git

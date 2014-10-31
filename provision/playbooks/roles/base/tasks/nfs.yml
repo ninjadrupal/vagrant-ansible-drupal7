@@ -6,3 +6,10 @@
   with_items:
     - nfs-common
     - portmap
+    - cachefilesd
+
+- name: NFS | Enable NFS caching
+  lineinfile: dest=/etc/default/cachefilesd regexp="^[#|;]?RUN=yes" insertafter="^[#|;]?RUN=yes" line="RUN=yes"
+  tags: php
+  sudo: true
+
