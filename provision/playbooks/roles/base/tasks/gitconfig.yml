@@ -7,3 +7,4 @@
   template: src=gitconfig.j2 dest=/home/{{ user }}/.gitconfig
   tags: git
   sudo: true
+
