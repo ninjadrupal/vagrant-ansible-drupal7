@@ -12,7 +12,7 @@
   git_name: "Your name"
   git_email: "your@email.com"
 
-# Give VM 1/4 of system memory
+# Recommended to give 1/4 of system memory
 # Must be in range [4, 3584] MB (VirtualBox restriction)
   memory: 1024
 # Give VM access to all cpu cores on the host
@@ -34,9 +34,6 @@
 
 # HTTP port for the web server. If you have turned off Varnish then you might want to set this to "80"
   http_port: 80
-
-# Administration email (used in instances when a server email is needed)
-  admin_mail: 'test@example.com'
 
 # php.ini settings
   php_memory_limit: 512M

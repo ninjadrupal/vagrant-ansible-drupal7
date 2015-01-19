@@ -1,14 +1,10 @@
-Webscope - Vagrant LAMP Ansible Drupal
-======================================
+# Webscope - Vagrant Ansible Drupal #
 
-A Drupal development platform in a box, with everything you would need to develop Drupal websites.
+Ansible provisioning of the Vagrant box for multiple Drupal 7 projects. It is designed so that you don't need to have things like webserver or Composer installed on your local system. You'll be able to do everything from within the virtual box.
 
-## Usable branches ##
-* `master` - hosts multiple Drupal projects on the same box
-* `frontend` - hosts a single project available on a local network
-* `single` - hosts a single project (our initial setup)
+That setup is heavily inspired by [https://github.com/hashbangcode/vlad](https://github.com/hashbangcode/vlad) and [Laravel Homestead](http://laravel.com/docs/4.2/homestead).
 
-This includes the following technologies:
+## What's inside ##
 
 * Nginx
 * PHP 5.3
@@ -23,26 +19,28 @@ This includes the following technologies:
 * Adminer
 * ImageMagick
 
-Prerequisites
--------------
+## Prerequisites ##
 
-* Vagrant 1.6 (Install from the website and not the repos)
-* VirtualBox 4.2+
-* Ansible
-* NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher)) - not required for `frontend` branch
+1. Linux or Mac
+2. [Vagrant](https://www.vagrantup.com/downloads.html)
+3. [Ansible](http://docs.ansible.com/intro_installation.html)
+4. [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+5. NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher))
 
+To install Ansible use the following commands:
+
+    sudo apt-get install python-setuptools
+    sudo easy_install pip
+    sudo pip install ansible
 
 You may have to install some prerequisite packages first:
 
     sudo pip install paramiko PyYAML jinja2 httplib2 markupsafe
-    sudo apt-get install nfs-kernel-server nfs-common portmap
     sudo apt-get install python-setuptools
 
-To install Ansible use the following commands:
-
-    sudo easy_install pip
-    sudo pip install ansible
-
+To install NFS
+    
+    sudo apt-get install nfs-kernel-server nfs-common portmap
 
 You can also install the Vagrant Cachier plugin in order to cache apt-get and gem requests, which speeds up reprovisioning.
 
@@ -58,42 +56,56 @@ Then remove vagrant reinstall and then try install the plugin again. We haven't 
 To support deprovisioning you also need to install the Vagrant Triggers plugin.
 
     vagrant plugin install vagrant-triggers
+    
+## Setup steps ##
 
-Usage
------
+1. Copy `provision/example.settings.yml` to `provision/settings.yml`
 
-When you first download that repo you will be unable to do anything with it as the system requires the use of a `settings.yml` file. In the 'provision' directory, copy & rename the `example.settings.yml` file to `settings.yml` - you can then tweak it to suit your needs.
+    `cd provision && cp example.settings.yml settings.yml`
 
-Make sure to provide your git settings, so you can push and pull from inside the virtual machine.
+2. Open `settings.yml` with your favorite editor.
 
-Out of the box you will get the following Vagrant box options:
+  * Provide your details for git setup. That will allow you to push and pull from inside the virtual machine.
+  * Pick a webserver hostname. Phpinfo will be available at this URL.
+  * Setup virtual hosts. See **Virtual hosts** section
+  * Change the box IP address (if needed).
+  * Change to box name to your liking.
+  * Set the amount of RAM for the box (MB).
+  * Specify your `localhost_ip_address` for xdebug (if needed).
+  * Change any other settings, though default are usually sufficient.
 
-    webserver_hostname: 'vagrant-multi.local'
-    webserver_hostname_alias: 'www.{{ webserver_hostname }}'
+3. Run `vagrant up`. You will be asked for your system password in the beginning and in the end of the installation.
+4. Run `vagrant ssh` to login to your box. All sites folders are in `~/sites` derectory.
 
-    # Vagrantfile configuration
+## Virtual hosts ##
 
-    boxipaddress: "192.168.100.100"
-    boxname: "vagrant"
+You can have as many sites as you want on a single box.
 
-Tweak the above settings if you want to create a separate project.
+    # Virtual hosts
+    vhosts:
+      - alias: first-project.local
+        path: ~/projects/first_project
+        db: project1
+      - alias: second-project.local
+        path: ~/projects/second_project
+        db: project2
 
-You can use the same IP address for each box, but in that case you won't be able to launch and access both at the same time.
-That IP address is written to your local hosts file on every `vagrant up` and is removed from the hosts file on `vagrant halt` or `vagrant destroy`
+You can specify the existing folder, otherwise it will be created. That will be you project root.
 
-For using xdebug, you will need to modify the following setting with your IP address on the local network:
+Virtual hosts are updated every time you run `vagrant up` or `vagrant reload`.
 
-    # Local IP address (used for xdebug)
-    localhost_ip_address: 192.168.1.1
+Databases are accessible via Adminer at [http://adminer.vagrant-multi.local/](http://adminer.vagrant-multi.local/).
+
+The local MySQL user details are as follows:
+Username: `user`
+Password: `password`
+
+## Additional notes ##
 
 You can find out the IP by running `ifconfig`. On OS X localhost IP address can be found in network settings.
 
-With the settings.yml file in place you can get up and running using the following command:
-
-    vagrant up
-
 Setting up the box takes about 15-20 minutes the first time (depending on your Internet connection), because Ansible provisioning script will download and install all the needed packages.
-You can see the webroot of the Vagrant box by going to the address [www.drupal.local](http://www.drupal.local/).
+You can see the webroot of the Vagrant box by going to the address [www.vagrant-multi.local/](http://www.vagrant-multi.local/).
 A local Ansible action will add an entry to your hosts file for the box IP address (192.168.100.100 by default) so you don't need to alter it.
 
 Next time you run `vagrant up` the process will take less than a minute.
@@ -120,25 +132,12 @@ To delete the box and the data it contains run the following command:
 
     vagrant destroy
 
-When you run 'vagrant up' again you will get back the original box.
+Use it with caution!. When you run 'vagrant up' again your box will be completely fresh.
 
-Additional
-----------
-You can access Adminer via the following URL:
-[http://adminer.vagrant-multi.local/](http://adminer.vagrant-multi.local/)
-
-Adminer will automatically log you in when you open it. The local MySQL user details are as follows:
-Username: user
-Password: password
-
-## PhpStorm xdebug setup ##
-Coming soon
+### Xdebug ###
 
 Xdebug configuration file: `/etc/php5/conf.d/xdebug.ini`
 If your local IP address has changed, Xdebug IP will need to be modified accordingly in the file specified above.
 Restart apache after changes were made by running `sudo service nginx restart && sudo service php5-fpm restart` in your box.
-
-Wiki
-----
-
-That setup is based on [https://github.com/hashbangcode/vlad](https://github.com/hashbangcode/vlad).
+Xdebug is disabled by default, as it slows down the VM considerably. Use it only when needed.
+You can enable xdebug by uncommenting the first line in `/etc/php5/conf.d/xdebug.ini`.
