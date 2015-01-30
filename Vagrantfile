@@ -33,7 +33,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure virtual machine options.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "hashicorp/precise32"
   config.vm.hostname = boxname
 
   config.vm.network :private_network, ip: boxipaddress
@@ -98,7 +98,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create all virtual hosts
   config.trigger.after [:up, :reload], :stdout => true, :force => true do
-    run 'ansible-playbook -i ' + boxipaddress + ', -K --user=vagrant --private-key=~/.vagrant.d/insecure_private_key ' + vagrant_dir + '/provision/playbooks/virtual_hosts.yml --extra-vars "local_ip_address=' + boxipaddress + '"'
+    run 'ansible-playbook -i ' + boxipaddress + ', -K --user=vagrant --private-key=~/.ssh/id_rsa ' + vagrant_dir + '/provision/playbooks/virtual_hosts.yml --extra-vars "local_ip_address=' + boxipaddress + '"'
   end
 
 end
