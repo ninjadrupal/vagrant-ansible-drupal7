@@ -46,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider :virtualbox do |v|
     v.customize ["modifyvm", :id, "--memory", vconfig["memory"]]
     v.customize ["modifyvm", :id, "--cpus", vconfig["cpus"]]
+    v.customize ["modifyvm", :id, "--ioapic", "on"]
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
   end
 
