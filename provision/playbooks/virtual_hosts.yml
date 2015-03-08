@@ -9,15 +9,43 @@
 
   tasks:
 
-    - name: Nginx | add vhost
+    - name: create a directory for SSL certificates
+      file: path=/etc/nginx/ssl state=directory
+      sudo: true
+
+    - name: create self-signed SSL cert
+      command: openssl req -new -nodes -x509 -subj "/C=NZ/ST=Auckland/L=Auckland/O=IT/CN={{ item['alias'] }}" -days 3650 -keyout /etc/nginx/ssl/{{ item['alias'] }}.key -out /etc/nginx/ssl/{{ item['alias'] }}.crt -extensions v3_ca creates=/etc/nginx/ssl/{{ item['alias'] }}.crt
+      notify: restart nginx
+      sudo: true
+      with_items:
+        - "{{ vhosts }}"
+
+    - name: Nginx | add SSL vhosts
+      template: src=templates/server_block_ssl.j2 dest=/etc/nginx/sites-available/{{ item['alias'] }}.ssl
+      tags: nginx
+      sudo: true
+      with_items:
+        - "{{ vhosts }}"
+
+    - name: Nginx | add non-SSL vhosts
       template: src=templates/server_block.j2 dest=/etc/nginx/sites-available/{{ item['alias'] }}
       tags: nginx
       sudo: true
       with_items:
         - "{{ vhosts }}"
 
-    - name: Nginx | enable vhosts
+    - name: Nginx | enable non-SSL vhosts
       file: src=/etc/nginx/sites-available/{{ item['alias'] }} dest=/etc/nginx/sites-enabled/{{ item['alias'] }} state=link
+      tags: nginx
+      sudo: true
+      with_items:
+        - "{{ vhosts }}"
+      notify:
+        - restart nginx
+        - restart fpm
+
+    - name: Nginx | enable SSL vhosts
+      file: src=/etc/nginx/sites-available/{{ item['alias'] }}.ssl dest=/etc/nginx/sites-enabled/{{ item['alias'] }}.ssl state=link
       tags: nginx
       sudo: true
       with_items:

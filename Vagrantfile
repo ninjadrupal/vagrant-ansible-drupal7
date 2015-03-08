@@ -62,6 +62,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # SSH Set up.
   config.ssh.forward_agent = true
 
+  config.vm.network "forwarded_port", guest: 443, host: 8443
+  config.vm.box_download_insecure = true
+
   # Run an Ansible playbook on setting the box up
   if !File.exist?(provision_hosts_file)
     config.trigger.before :up, :stdout => true, :force => true do
