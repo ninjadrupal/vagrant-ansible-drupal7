@@ -35,7 +35,7 @@ alias gap='git add -pi'
 alias dca='drush cc all'
 alias dcm='drush cc menu'
 alias dfl='drush fl'
-alias drush='drush --strict'
+alias drush='drush --strict=0'
 
 alias untarf='tar xf *.tar && rm *.tar'
 
@@ -61,3 +61,4 @@ esac
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
+alias restart='sudo service nginx restart; sudo service php5-fpm restart'
