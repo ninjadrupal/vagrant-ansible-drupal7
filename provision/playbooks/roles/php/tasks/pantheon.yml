@@ -1,0 +1,12 @@
+---
+- name: Pantheon | Check if Terminus is installed (ignore if fails)
+  raw: terminus art
+  register: terminus_installed
+  ignore_errors: true
+  tags: pantheon
+
+- name: Pantheon | install Terminus
+  raw: curl https://github.com/pantheon-systems/cli/releases/download/0.5.5/terminus.phar -L -o /usr/local/bin/terminus && chmod +x /usr/local/bin/terminus
+  when: terminus_installed.stdout.find('command not found') != -1
+  tags: pantheon
+  sudo: true
