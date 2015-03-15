@@ -70,22 +70,6 @@
   when: registry_rebuild_installed.stdout.find('No such file or directory') != -1
   tags: drush
 
-- name: Drush | Check if Terminus is installed (ignore if fails)
-  raw: ls ~/.drush/terminus
-  register: terminus_installed
-  ignore_errors: true
-  tags: drush
-
-- name: Drush | download Terminus for Pantheon
-  git: repo=https://github.com/pantheon-systems/terminus.git dest=/home/{{ user }}/.drush/terminus
-  when: terminus_installed.stdout.find('No such file or directory') != -1
-  tags: drush
-
-- name: Drush | download Terminus dependencies
-  command: composer update --no-dev chdir=/home/{{ user }}/.drush/terminus
-  when: terminus_installed.stdout.find('No such file or directory') != -1
-  tags: drush
-
 - name: Drush | clear drush cache
   command: drush cc all 
   tags: drush
