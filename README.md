@@ -22,29 +22,16 @@ That setup is heavily inspired by [https://github.com/hashbangcode/vlad](https:/
 ## Prerequisites ##
 
 1. Linux or Mac
-2. [Vagrant](https://www.vagrantup.com/downloads.html)
-3. [Ansible](http://docs.ansible.com/intro_installation.html)
-4. [Virtual Box](https://www.virtualbox.org/wiki/Downloads)
+2. Vagrant ([latest version](https://www.vagrantup.com/downloads.html))
+3. Ansible ([installation instructions](http://docs.ansible.com/intro_installation.html))
+4. Virtual Box ([download](https://www.virtualbox.org/wiki/Downloads))
 5. NFS (This comes pre-installed on Mac OS X 10.5+ (Leopard and higher))
 
-To install Ansible use the following commands:
+    `sudo apt-get install nfs-kernel-server nfs-common portmap`
 
-    sudo apt-get install python-setuptools
-    sudo easy_install pip
-    sudo pip install ansible
+6. vagrant-triggers plugin
 
-You may have to install some prerequisite packages first:
-
-    sudo pip install paramiko PyYAML jinja2 httplib2 markupsafe
-    sudo apt-get install python-setuptools
-
-To install NFS
-    
-    sudo apt-get install nfs-kernel-server nfs-common portmap
-
-You can also install the Vagrant Cachier plugin in order to cache apt-get and gem requests, which speeds up reprovisioning.
-
-    vagrant plugin install vagrant-cachier
+    `vagrant plugin install vagrant-triggers`
 
 If you have issues with the vargrant-cachier plugin complaining about : `gem install nokogiri -v '1.6.3.1' - try the following:
 
@@ -52,10 +39,6 @@ If you have issues with the vargrant-cachier plugin complaining about : `gem ins
     rm -rf ~/.vagrant.d
 
 Then remove vagrant reinstall and then try install the plugin again. We haven't quite got the bottom of what goes wrong here - sometimes it works smoothly and sometimes not. Issue detailed here [https://github.com/mitchellh/vagrant/issues/3769](https://github.com/mitchellh/vagrant/issues/3769)
-
-To support deprovisioning you also need to install the Vagrant Triggers plugin.
-
-    vagrant plugin install vagrant-triggers
     
 ## Setup steps ##
 

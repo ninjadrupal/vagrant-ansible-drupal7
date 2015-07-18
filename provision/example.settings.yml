@@ -69,6 +69,3 @@
 # Set the level of verbosity that Ansible will use
 # This can be one of "", "v", "vv", "vvv", or "vvvv"
   ansible_verbosity: ""
-
-# Ruby settings
-  default_ruby_version: "2.1.2"

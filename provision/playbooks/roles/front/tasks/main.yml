@@ -1,3 +1,2 @@
 ---
 - include: nodejs.yml
-- include: ruby.yml
