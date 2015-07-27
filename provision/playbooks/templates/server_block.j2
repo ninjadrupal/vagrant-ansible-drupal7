@@ -1,7 +1,7 @@
 server {
     listen 80;
 
-    server_name {{ item['alias'] }} www.{{ item['alias'] }};
+    server_name {{ item['alias'] }} www.{{ item['alias'] }} {%- if item['custom_aliases'] is defined %} {{ item['custom_aliases'] }} {%- endif %};
 
     root {{ sites_dir }}/{{ item['alias'] }};
 

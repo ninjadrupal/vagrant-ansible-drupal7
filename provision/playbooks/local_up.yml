@@ -35,7 +35,7 @@
       lineinfile:
           dest='{{ hosts_file_location }}'
           state=absent
-          regexp=".*?\s{{ item['alias'] }} www.{{ item['alias'] }}"
+          regexp=".*?\s{{ item['alias'] }} www.{{ item['alias'] }} {%- if item['custom_aliases'] is defined %} {{ item['custom_aliases'] }} {%- endif %}"
       delegate_to: 127.0.0.1
       sudo: true
       with_items:
@@ -45,7 +45,7 @@
       lineinfile:
           dest='{{ hosts_file_location }}'
           state=present
-          line="{{ local_ip_address }} {{ item['alias'] }} www.{{ item['alias'] }}"
+          line="{{ local_ip_address }} {{ item['alias'] }} www.{{ item['alias'] }} {%- if item['custom_aliases'] is defined %} {{ item['custom_aliases'] }} {%- endif %}"
       delegate_to: 127.0.0.1
       sudo: true
       with_items:

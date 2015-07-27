@@ -3,10 +3,12 @@
 # Change settings here to control how your box is set up.
 
 # Virtual hosts
+# www alias is created automatically from the alias
   vhosts:
     - alias: domain.local
       path: /absolute/path/to/app
       db: projectdb
+      custom_aliases: custom_alias.local
 
 # Git settings
   git_name: "Your name"
