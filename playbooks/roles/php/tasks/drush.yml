@@ -6,7 +6,7 @@
   tags: drush
 
 - name: Drush | install drush via composer
-  command: composer global require drush/drush:6.*
+  command: composer global require drush/drush:7.*
   when: drush_installed.stdout.find('command not found') != -1
   tags: drush
 
