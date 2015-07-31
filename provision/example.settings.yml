@@ -8,7 +8,7 @@
     - alias: domain.local
       path: /absolute/path/to/app
       db: projectdb
-      custom_aliases: custom_alias.local
+      custom_aliases: custom_alias.local second_alias.local www.third_alias.anything
 
 # Git settings
   git_name: "Your name"
