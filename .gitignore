@@ -43,10 +43,10 @@ vagrant_ansible_inventory_*
 
 # Provisioning specific files #
 #######################
-provision/host.ini
+host.ini
 vagrant_ansible_inventory_provision
-provision/ansible.log
-provision/settings.yml
+ansible.log
+settings.yml
 
 # Default & common shared web root folder names #
 #################################################
@@ -54,13 +54,3 @@ webroot/*
 www/*
 public_html/*
 htdocs/*
-
-# Aux shared folder #
-#####################
-aux/*/*
-!aux/*/README.md
-
-# Custom playbooks #
-####################
-provision/playbooks-custom/custom/*
-!provision/playbooks-custom/README.md

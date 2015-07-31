@@ -4,11 +4,12 @@
 
 # Virtual hosts
 # www alias is created automatically from the alias
+# Custom aliases should be separated by a space. You can remove that line completely.
   vhosts:
     - alias: domain.local
       path: /absolute/path/to/app
       db: projectdb
-      custom_aliases: custom_alias.local
+      custom_aliases: custom_alias.local second_alias.local www.third_alias.anything
 
 # Git settings
   git_name: "Your name"
@@ -34,9 +35,6 @@
 # Local IP address (used for xdebug)
   localhost_ip_address: 192.168.1.1
 
-# HTTP port for the web server. If you have turned off Varnish then you might want to set this to "80"
-  http_port: 80
-
 # php.ini settings
   php_memory_limit: 512M
   php_max_execution_time: 60
@@ -60,12 +58,8 @@
   mysql_character_set_server: utf8
   mysql_collation_server: utf8_general_ci
 
-# SSH Settings
-  ssh_port: 22
-
 # Local hosts file location
 # Default location on *nix hosts is '/etc/hosts'
-# Default location for GasMask on OSX is '/Users/< username >/Library/Gas Mask/Local/< file >.hst'
   hosts_file_location: "/etc/hosts"
 
 # Set the level of verbosity that Ansible will use

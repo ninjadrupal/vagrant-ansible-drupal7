@@ -42,7 +42,7 @@ Then remove vagrant reinstall and then try install the plugin again. We haven't 
     
 ## Setup steps ##
 
-1. Copy `provision/example.settings.yml` to `provision/settings.yml`
+1. Copy `example.settings.yml` to `settings.yml`
 
     `cd provision && cp example.settings.yml settings.yml`
 
