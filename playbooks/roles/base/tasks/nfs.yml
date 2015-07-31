@@ -12,4 +12,3 @@
   lineinfile: dest=/etc/default/cachefilesd regexp="^[#|;]?RUN=yes" insertafter="^[#|;]?RUN=yes" line="RUN=yes"
   tags: php
   sudo: true
-
