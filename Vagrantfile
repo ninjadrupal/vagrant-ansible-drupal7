@@ -17,11 +17,11 @@ end
 
 # Find the current vagrant directory.
 vagrant_dir = File.expand_path(File.dirname(__FILE__))
-provision_hosts_file = vagrant_dir + '/provision/host.ini'
+provision_hosts_file = vagrant_dir + '/host.ini'
 
-# Include config from provision/settings.yml
+# Include config from settings.yml
 require 'yaml'
-vconfig = YAML::load_file(vagrant_dir + "/provision/settings.yml")
+vconfig = YAML::load_file(vagrant_dir + "/settings.yml")
 
 # Configuration
 boxipaddress = vconfig['boxipaddress']
@@ -33,7 +33,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Configure virtual machine options.
-  config.vm.box = "hashicorp/precise64"
+  config.vm.box = "ubuntu/trusty64"
   config.vm.hostname = boxname
 
   config.vm.network :private_network, ip: boxipaddress
@@ -62,26 +62,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # SSH Set up.
   config.ssh.forward_agent = true
 
-  config.vm.network "forwarded_port", guest: 443, host: 8443
-  config.vm.box_download_insecure = true
-
   # Run an Ansible playbook on setting the box up
   if !File.exist?(provision_hosts_file)
     config.trigger.before :up, :stdout => true, :force => true do
-      run 'ansible-playbook -i ' + boxipaddress + ', --ask-sudo-pass ' + vagrant_dir + '/provision/playbooks/local_up.yml --extra-vars "local_ip_address=' + boxipaddress + '"'
+      run 'ansible-playbook -i ' + boxipaddress + ', --ask-sudo-pass ' + vagrant_dir + '/playbooks/local_up.yml --extra-vars "local_ip_address=' + boxipaddress + '"'
     end
   end
 
   # Run the halt/destroy playbook upon halting or destroying the box
-    if File.exist?(provision_hosts_file)
+  if File.exist?(provision_hosts_file)
     config.trigger.before [:halt, :destroy], :stdout => true, :force => true do
-      run 'ansible-playbook -i ' + boxipaddress + ', --ask-sudo-pass ' + vagrant_dir + '/provision/playbooks/local_halt_destroy.yml'
+      run 'ansible-playbook -i ' + boxipaddress + ', --ask-sudo-pass ' + vagrant_dir + '/playbooks/local_halt_destroy.yml'
     end
   end
 
   # Provision vagrant box with Ansible.
   config.vm.provision "ansible" do |ansible|
-    ansible.playbook = vagrant_dir + "/provision/playbooks/site.yml"
+    ansible.playbook = vagrant_dir + "/playbooks/setup.yml"
     ansible.host_key_checking = false
     ansible.extra_vars = {user:"vagrant"}
     if vconfig['ansible_verbosity'] != ''
@@ -89,6 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # Create synced folders for each virtual host.
   vconfig['vhosts'].each do |vhost|
     site_alias = vhost['alias']
     folder_path = vhost['path']
@@ -96,7 +94,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "/home/vagrant/sites/" + site_alias,
       create: true,
       type: "nfs",
-      mount_options: ['rw', 'fsc'],  # the fsc is for cachedfilesd
       :nfs => nfs_setting
   end
 
