@@ -1,0 +1,67 @@
+---
+# Webscope configuration file
+# Change settings here to control how your box is set up.
+
+# Virtual hosts
+# www alias is created automatically from the alias
+# Custom aliases should be separated by a space. You can remove that line completely.
+  vhosts:
+    - alias: domain.local
+      path: /absolute/path/to/app
+      db: projectdb
+      custom_aliases: custom-alias.local second-alias.local www.third-alias.anything
+
+# Git settings
+  git_name: "Your name"
+  git_email: "your@email.com"
+
+# Recommended to give 1/4 of system memory
+# Must be in range [4, 3584] MB (VirtualBox restriction)
+  memory: 1024
+# Give VM access to all cpu cores on the host
+# To find out the number of cores, run the following commands:
+#   Mac: sysctl -n hw.ncpu
+#   Linux: nproc
+  cpus: 2
+
+# Webserver settings
+  webserver_hostname: 'vagrant-multi.local'
+  webserver_hostname_alias: 'www.{{ webserver_hostname }}'
+
+# Vagrantfile configuration
+  boxipaddress: "192.168.100.100"
+  boxname: "vagrant"
+
+# Local IP address (used for xdebug)
+  localhost_ip_address: 192.168.1.1
+
+# php.ini settings
+  php_memory_limit: 512M
+  php_max_execution_time: 60
+  php_post_max_size: 100M
+  php_upload_max_filesize: 100M
+  php_display_errors: On
+  php_display_startup_errors: On
+  php_html_errors: On
+  php_date_timezone: Pacific/Auckland
+
+# MySQL Settings
+  mysql_port: 3306
+  mysql_root_password: password
+  server_hostname: vagrant
+  dbuser: user
+  dbpass: password
+
+# MySQL my.cnf settings
+  mysql_max_allowed_packet: 128M
+  innodb_file_per_table: innodb_file_per_table
+  mysql_character_set_server: utf8
+  mysql_collation_server: utf8_general_ci
+
+# Local hosts file location
+# Default location on *nix hosts is '/etc/hosts'
+  hosts_file_location: "/etc/hosts"
+
+# Set the level of verbosity that Ansible will use
+# This can be one of "", "v", "vv", "vvv", or "vvvv"
+  ansible_verbosity: ""

@@ -1,0 +1,38 @@
+---
+- name: Nginx | install nginx
+  apt: pkg=nginx state=installed
+  sudo: true
+
+- name: Nginx | nginx settings
+  template: src=nginx.conf.j2
+            dest=/etc/nginx/nginx.conf
+  sudo: true
+  notify:
+    - restart nginx
+
+- name: Nginx | disable default server block
+  file: path=/etc/nginx/sites-enabled/default
+        state=absent
+  sudo: true
+  notify:
+    - restart nginx
+
+- name: Nginx | create our default server block
+  template: src=default_server_block.j2
+            dest=/etc/nginx/sites-available/{{ webserver_hostname }}
+  sudo: true
+
+- name: Nginx | enable our default server block
+  file: src=/etc/nginx/sites-available/{{ webserver_hostname }}
+        dest=/etc/nginx/sites-enabled/{{ webserver_hostname }}
+        state=link
+  sudo: true
+  notify:
+    - restart nginx
+
+- name: Nginx | set default login directory to be /home/vagrant/sites
+  lineinfile: dest=/home/{{ user }}/.bashrc state=present line='cd {{ sites_dir }}'
+
+- name: Nginx | restart nginx
+  service: name=nginx state=restarted
+  sudo: true

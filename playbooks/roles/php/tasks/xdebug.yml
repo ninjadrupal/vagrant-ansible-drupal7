@@ -1,0 +1,19 @@
+---
+- name: Xdebug | Install Xdebug PHP component
+  apt: pkg=php5-xdebug state=installed
+  register: xdebug_installed
+  tags: xdebug
+  sudo: true
+
+- name: Xdebug | Get first line of /etc/php5/mods-available/xdebug.ini
+  command: head -n 1 /etc/php5/mods-available/xdebug.ini
+  when: xdebug_installed.changed
+  register: xdebug_first_line
+  tags: xdebug
+  sudo: true
+
+- name: Xdebug | Update xdebug configuration file.
+  template: src=php/php_nginx_xdebug.ini.j2 dest=/etc/php5/mods-available/xdebug.ini
+  when: xdebug_installed.changed
+  tags: xdebug
+  sudo: true

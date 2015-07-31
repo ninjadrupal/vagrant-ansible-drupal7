@@ -7,14 +7,13 @@ That setup is heavily inspired by [https://github.com/hashbangcode/vlad](https:/
 ## What's inside ##
 
 * Nginx
-* PHP 5.3
+* PHP 5.5
 * MySQL
-* Codeception with PhantomJS
-* NodeJS
-* Ruby rbenv
-* Git
-* Vim
-* Drush (with the 'site audit' and 'hacked!', 'registry_rebuild' and 'terminus' modules)
+* Codeception with Selenium, Chrome, Firefox and PhantomJS
+* NodeJS, Bower, Grunt and Gulp
+* Git, Vim, etc.
+* Drush 7 (with the 'site audit' and 'hacked!' and 'registry_rebuild'modules)
+* Terminus (Pantheon CLI)
 * Xdebug (disabled on build)
 * Adminer
 * ImageMagick
@@ -42,7 +41,7 @@ Then remove vagrant reinstall and then try install the plugin again. We haven't 
     
 ## Setup steps ##
 
-1. Copy `provision/example.settings.yml` to `provision/settings.yml`
+1. Copy `example.settings.yml` to `settings.yml`
 
     `cd provision && cp example.settings.yml settings.yml`
 
@@ -69,9 +68,11 @@ You can have as many sites as you want on a single box.
       - alias: first-project.local
         path: ~/projects/first_project
         db: project1
+        custom_aliases: project-number-one.local project-one.local
       - alias: second-project.local
         path: ~/projects/second_project
         db: project2
+        custom_aliases: project-number-two.local project-two.local
 
 You can specify the existing folder, otherwise it will be created. That will be you project root.
 
@@ -119,8 +120,8 @@ Use it with caution!. When you run 'vagrant up' again your box will be completel
 
 ### Xdebug ###
 
-Xdebug configuration file: `/etc/php5/conf.d/xdebug.ini`
+Xdebug configuration file: `/etc/php5/mods-available/xdebug.ini`
 If your local IP address has changed, Xdebug IP will need to be modified accordingly in the file specified above.
 Restart apache after changes were made by running `sudo service nginx restart && sudo service php5-fpm restart` in your box.
 Xdebug is disabled by default, as it slows down the VM considerably. Use it only when needed.
-You can enable xdebug by uncommenting the first line in `/etc/php5/conf.d/xdebug.ini`.
+You can enable xdebug by uncommenting the first line in `/etc/php5/mods-available/xdebug.ini`.
